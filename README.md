@@ -13,11 +13,11 @@
 
 * 前台界面
 
-  ![image-20230815081048406](C:\Users\Dj\Desktop\gti\nodejs_blog1\README.assets\image-20230815081048406.png)
+  ![image-20230815081048406](README.assets/image-20230815081149937.png)
   
 * 后台界面
 
-  ![image-20230815081149937](C:\Users\Dj\Desktop\gti\nodejs_blog1\README.assets\image-20230815081149937.png)
+  ![image-20230815081149937](README.assets/image-20230815081048406.png)
   
 
 
