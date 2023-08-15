@@ -1,0 +1,111 @@
+#!/usr/bin/env node
+
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('blog:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+// 设置端口号
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+console.log('监听端口'+port+'服务已经启动...');
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  // 将字符串转换为整数
+  var port = parseInt(val, 10);
+  // 如果整数为0，则返回true
+  if (port == 0) {
+    return true;
+  }
+
+  // 如果整数不为0，则比较字符串是否为数字
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+//
+
+  // 如果整数大于0，则返回整数
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+//
+
+  // 否则返回false
+  return false;
+}
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  // 如果错误的系统调用不是listen，则抛出错误
+  if (error.syscall!== 'listen') {
+    throw error;
+  }
+
+  // 根据port参数的类型，拼接bind字符串
+  var bind = typeof port ==='string'
+    ? 'Pipe'+ port
+    : 'Port'+ port;
+
+  // handle specific listen errors with friendly messages
+  // 对错误的code进行分类处理
+  // EACCES: 用户没有权限执行该命令
+  // EADDRINUSE: 目标端口已被占用
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind +'requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind +'is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+//函数onListening用于监听服务器的绑定
+function onListening() {
+  //获取服务器的绑定地址
+  var addr = server.address();
+  //判断绑定地址的类型是否为字符串
+  var bind = typeof addr ==='string'
+    //判断绑定地址是否为pipe或者port
+    ? 'pipe'+ addr
+    : 'port'+ addr.port;
+  //输出监听的绑定地址
+  debug('Listening on'+ bind);
+}
